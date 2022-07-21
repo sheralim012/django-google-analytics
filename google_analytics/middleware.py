@@ -26,10 +26,10 @@ class GoogleAnalyticsMiddleware(MiddlewareMixin):
         except AttributeError:
             title = None
 
-        path = request.path
+        path = request.get_full_path()
         referer = request.META.get('HTTP_REFERER', '')
         params = build_ga_params(
             request, account, path=path, referer=referer, title=title)
         response = set_cookie(params, response)
-        send_ga_tracking.delay(params)
+        send_ga_tracking(params)
         return response

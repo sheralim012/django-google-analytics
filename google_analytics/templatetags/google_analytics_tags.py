@@ -33,7 +33,7 @@ def google_analytics(context, tracking_code=None, debug=False):
     # remove collected parameters from the path and pass it on
     path = request.get_full_path()
     parsed_url = urlparse(path)
-    query = parse_qs(parsed_url.query)
+    query = parse_qs(parsed_url.query, keep_blank_values=True)
     for param in params:
         if param in query:
             del query[param]
